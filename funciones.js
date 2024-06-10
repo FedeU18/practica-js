@@ -103,6 +103,13 @@ function esFechaValida(dia, mes, anio) {
   return valido;
 }
 
+function validarEmail(email) {
+  let validar = true;
+  expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  if (!expr.test(email)) validar = false;
+  return validar;
+}
+
 function validar() {
   // console.log("verificar bisiesto: ", verificarAnioBisiesto(2010));
   // console.log("verificar bisiesto: ", verificarAnioBisiesto(2012));
@@ -113,5 +120,7 @@ function validar() {
   // console.log("verificar dias del mes: ", verificarDiasDelMes(1));
   // console.log("verificar dias del mes: ", verificarDiasDelMes(3));
 
-  console.log("validar fecha: ", esFechaValida(31, 4, 2023));
+  // console.log("validar fecha: ", esFechaValida(31, 4, 2023));
+
+  console.log("validar email: ", validarEmail("algo@algo.com"));
 }
