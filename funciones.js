@@ -50,36 +50,68 @@ const meses = [
 ];
 
 function validarEsEnteroPositivo(numero) {
-  return Number.isInteger(numero) && numero > 0;
+  return Number.isInteger(numero) && numero >= 0;
 }
-/**
- * retorna 1 si el mes tiene 31 días, -1 si tiene 30 y 0 si es febrero
- * @param {int} $mes
- * @return {int}
- */
-function verificarDiasDelMes(mes) {
-  let diasDelMes = 0;
+// /**
+//  * retorna 1 si el mes tiene 31 días, -1 si tiene 30 y 0 si es febrero
+//  * @param {int} $mes
+//  * @return {int}
+//  */
+// function verificarDiasDelMes(mes) {
+//   let diasDelMes = 0;
 
-  if (meses[mes].dias == 31) {
-    diasDelMes = 1;
-  } else if (meses[mes].dias == 30) {
-    diasDelMes = -1;
-  }
+//   if (meses[mes].dias == 31) {
+//     diasDelMes = 1;
+//   } else if (meses[mes].dias == 30) {
+//     diasDelMes = -1;
+//   }
 
-  return diasDelMes;
-}
+//   return diasDelMes;
+// }
 
 function verificarAnioBisiesto(anio) {
   return anio % 4 == 0 && (anio % 100 != 0 || anio % 400 == 0);
 }
 
+function esFechaValida(dia, mes, anio) {
+  // let diasDelMes = verificarDiasDelMes(mes)
+  let valido = true;
+  if (verificarAnioBisiesto(anio)) {
+    meses[1].dias = 29;
+  } else {
+    meses[1].dias = 28;
+  }
+  if (
+    !(
+      validarEsEnteroPositivo(dia) &&
+      validarEsEnteroPositivo(mes) &&
+      validarEsEnteroPositivo(anio)
+    )
+  ) {
+    valido = false;
+  }
+  if (dia == 0) {
+    valido = false;
+  }
+  if (dia > meses[mes].dias) {
+    valido = false;
+  }
+  if (mes > 12) {
+    valido = false;
+  }
+
+  return valido;
+}
+
 function validar() {
-  console.log("verificar bisiesto: ", verificarAnioBisiesto(2010));
-  console.log("verificar bisiesto: ", verificarAnioBisiesto(2012));
-  console.log("verificar entero positivo: ", validarEsEnteroPositivo(10));
-  console.log("verificar entero positivo: ", validarEsEnteroPositivo(-10));
-  console.log("verificar entero positivo: ", validarEsEnteroPositivo(10.1));
-  console.log("verificar dias del mes: ", verificarDiasDelMes(0));
-  console.log("verificar dias del mes: ", verificarDiasDelMes(1));
-  console.log("verificar dias del mes: ", verificarDiasDelMes(3));
+  // console.log("verificar bisiesto: ", verificarAnioBisiesto(2010));
+  // console.log("verificar bisiesto: ", verificarAnioBisiesto(2012));
+  // console.log("verificar entero positivo: ", validarEsEnteroPositivo(10));
+  // console.log("verificar entero positivo: ", validarEsEnteroPositivo(-10));
+  // console.log("verificar entero positivo: ", validarEsEnteroPositivo(10.1));
+  // console.log("verificar dias del mes: ", verificarDiasDelMes(0));
+  // console.log("verificar dias del mes: ", verificarDiasDelMes(1));
+  // console.log("verificar dias del mes: ", verificarDiasDelMes(3));
+
+  console.log("validar fecha: ", esFechaValida(31, 4, 2023));
 }
