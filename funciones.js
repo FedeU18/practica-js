@@ -76,27 +76,31 @@ function verificarAnioBisiesto(anio) {
 function esFechaValida(dia, mes, anio) {
   // let diasDelMes = verificarDiasDelMes(mes)
   let valido = true;
-  if (verificarAnioBisiesto(anio)) {
-    meses[1].dias = 29;
+  if (mes < 13 && mes > 0) {
+    if (verificarAnioBisiesto(anio)) {
+      meses[1].dias = 29;
+    } else {
+      meses[1].dias = 28;
+    }
+    if (
+      !(
+        validarEsEnteroPositivo(dia) &&
+        validarEsEnteroPositivo(mes) &&
+        validarEsEnteroPositivo(anio)
+      )
+    ) {
+      valido = false;
+    }
+    if (dia == 0) {
+      valido = false;
+    }
+    if (dia > meses[mes - 1].dias) {
+      valido = false;
+    }
+    if (mes > 12) {
+      valido = false;
+    }
   } else {
-    meses[1].dias = 28;
-  }
-  if (
-    !(
-      validarEsEnteroPositivo(dia) &&
-      validarEsEnteroPositivo(mes) &&
-      validarEsEnteroPositivo(anio)
-    )
-  ) {
-    valido = false;
-  }
-  if (dia == 0) {
-    valido = false;
-  }
-  if (dia > meses[mes].dias) {
-    valido = false;
-  }
-  if (mes > 12) {
     valido = false;
   }
 
@@ -111,16 +115,53 @@ function validarEmail(email) {
 }
 
 function validar() {
-  // console.log("verificar bisiesto: ", verificarAnioBisiesto(2010));
-  // console.log("verificar bisiesto: ", verificarAnioBisiesto(2012));
-  // console.log("verificar entero positivo: ", validarEsEnteroPositivo(10));
-  // console.log("verificar entero positivo: ", validarEsEnteroPositivo(-10));
-  // console.log("verificar entero positivo: ", validarEsEnteroPositivo(10.1));
-  // console.log("verificar dias del mes: ", verificarDiasDelMes(0));
-  // console.log("verificar dias del mes: ", verificarDiasDelMes(1));
-  // console.log("verificar dias del mes: ", verificarDiasDelMes(3));
+  const inputNombre = document.getElementById("nombre");
+  const inputApellido = document.getElementById("apellido");
+  const inputEmail = document.getElementById("email");
+  const selectObraSocial = document.getElementById("obras_sociales");
 
-  // console.log("validar fecha: ", esFechaValida(31, 4, 2023));
+  const inputDia = document.getElementById("dia");
+  const inputMes = document.getElementById("mes");
+  const inputAnio = document.getElementById("anio");
 
-  console.log("validar email: ", validarEmail("algo@algo.com"));
+  if (inputNombre.value == "") {
+    inputNombre.style.borderColor = "red";
+  } else {
+    inputNombre.style.borderColor = "#cccccc";
+  }
+  if (inputApellido.value == "") {
+    inputApellido.style.borderColor = "red";
+  } else {
+    inputApellido.style.borderColor = "#cccccc";
+  }
+  if (inputEmail.value == "") {
+    inputEmail.style.borderColor = "red";
+  } else {
+    inputEmail.style.borderColor = "#cccccc";
+  }
+  if (selectObraSocial.value == "") {
+    selectObraSocial.style.borderColor = "red";
+  } else {
+    selectObraSocial.style.borderColor = "#cccccc";
+  }
+
+  if (
+    !esFechaValida(
+      Number(inputDia.value),
+      Number(inputMes.value),
+      Number(inputAnio.value)
+    )
+  ) {
+    inputAnio.style.borderColor = "red";
+    inputMes.style.borderColor = "red";
+    inputDia.style.borderColor = "red";
+  } else {
+    inputAnio.style.borderColor = "#cccccc";
+    inputMes.style.borderColor = "#cccccc";
+    inputDia.style.borderColor = "#cccccc";
+  }
+}
+
+function onChangeEvent(e) {
+  console.log(e);
 }
