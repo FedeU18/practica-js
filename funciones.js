@@ -108,9 +108,9 @@ function esFechaValida(dia, mes, anio) {
 }
 
 function validarEmail(email) {
-  let validar = true;
+  let validar = false;
   expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-  if (!expr.test(email)) validar = false;
+  if (!expr.test(email)) validar = true;
   return validar;
 }
 
@@ -143,6 +143,12 @@ function validar() {
     selectObraSocial.style.borderColor = "red";
   } else {
     selectObraSocial.style.borderColor = "#cccccc";
+  }
+
+  if (validarEmail(inputEmail.value)) {
+    inputEmail.style.borderColor = "red";
+  } else {
+    inputEmail.style.borderColor = "#cccccc";
   }
 
   if (
